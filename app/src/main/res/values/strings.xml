@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">android-exercises-resolution</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="successful_validation">Validation Successful</string>
+    <string name="email">Email</string>
+    <string name="validate">validate</string>
 </resources>
