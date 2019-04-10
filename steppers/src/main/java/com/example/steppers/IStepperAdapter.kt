@@ -1,0 +1,60 @@
+package com.example.steppers
+
+import android.content.Context
+import android.view.View
+
+interface IStepperAdapter {
+
+    /**
+     * This method will be called by the VerticalStepperView to obtain a title string
+     * to describe the title of specified step. The string cannot be null.
+     *
+     * @param index The index of the title requested
+     * @return A title for the requested step
+     */
+    abstract fun getTitle(index: Int): CharSequence
+
+    /**
+     * This method may be called by the VerticalStepperView to obtain a title string
+     * to describe the summary of specified step. It may return null indicating
+     * no summary for this step.
+     *
+     * @param index The index of the summary requested
+     * @return A summary for the requested step
+     */
+    abstract fun getSummary(index: Int): CharSequence?
+
+    /**
+     * Get the count of steppers
+     *
+     * @return The size of adapter
+     */
+    abstract fun size(): Int
+
+    /**
+     * When the specified step need a custom view, this method will be called
+     * for creating custom view. If you want to add it to ItemView by yourself,
+     * it can return null. The returned view will be added to ItemView.
+     *
+     * @param index Index
+     * @param context Context
+     * @param parent Vertical Stepper Item View
+     * @return The custom view created
+     */
+    abstract fun onCreateCustomView(index: Int, context: Context, parent: VerticalStepperItemView): View
+
+    /**
+     * This method will be called when a stepper is showed.
+     *
+     * @param index The index of stepper showed
+     */
+    abstract fun onShow(index: Int)
+
+    /**
+     * This method will be called when a stepper is hidden.
+     *
+     * @param index The index of stepper hidden
+     */
+    abstract fun onHide(index: Int)
+
+}
