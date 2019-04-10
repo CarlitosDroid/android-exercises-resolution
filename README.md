@@ -1,4 +1,4 @@
-# Second Exercise (action animation)
+# Second Exercise (shake animation)
 
 # I didn't understand very well the meaning of shake action. I was thinking about shaking a view or make a shake with my android hadware and detect it. In any case, I think I had to make both.
 
