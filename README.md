@@ -2,7 +2,7 @@
 This sample project shows the resolution of 4 exercises in Android. Let's see some best practices and how to solve them.
 
 ## Enhancements for the exercises
-I could have made a better solution because eveything always has a improvement, but don't get impatient, little by little :3
+I could have made a better solution because eveything always has a improvement. Sometimes there are variables like the time, and time is gold. Don't get impatient little by little :3. Happy coding!
 
 Go to Exercises:
 # [First Exercise][1]
