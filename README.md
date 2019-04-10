@@ -11,6 +11,6 @@ Go to Exercises:
 [2]: https://github.com/CarlitosDroid/android-exercises-resolution/tree/exercise_2_shake_animation
 [3]: https://github.com/CarlitosDroid/android-exercises-resolution/tree/exercise_2_shake_action
 [4]: https://github.com/CarlitosDroid/android-exercises-resolution/tree/exercise_3_mvp_project
-[5]: https://github.com/CarlitosDroid/android-exercises-resolution/tree/exercise_3_mvp_project
+[5]: https://github.com/CarlitosDroid/android-exercises-resolution/tree/exercise_4_compass
 
 
