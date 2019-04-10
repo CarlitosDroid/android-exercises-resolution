@@ -1,6 +1,9 @@
 # Resolution of Exercises
 This sample project shows the resolution of 4 exercises in Android. Let's see some best practices and how to solve them.
 
+## Enhancements for the exercises
+I could have made a better solution because eveything always has a improvement, but don't get impatient, little by little :3
+
 Go to Exercises:
 # [First Exercise][1]
 # [Second Exercise (shake animation)][2]
