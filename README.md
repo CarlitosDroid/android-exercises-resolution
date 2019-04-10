@@ -14,7 +14,7 @@
 </p>
 As you can see in the picture, the idea is aimed to have a modularize application with different modules.
 
-4. In order to take advantage of `Dependency Injection` design patern which allows us loose coupling (architecture principle). We need to add a Dagger folder in every module in order to share Dagger Components and use dependencies in every module. Don't forget [`a class shouldn’t know anything about how it is injected`][1]
+4. In order to take advantage of `Dependency Injection` design patern which allows us loose coupling (architecture principle). We need to add a Dagger folder in every module in order to share Dagger Components and use dependencies in every module. Don't forget [`a class shouldn’t know anything about how it is injected`][6]
 
 # 5. Now the MVP(architectural pattern), The way that I define it in a module is as follow below:
 <p align="center">
@@ -90,6 +90,17 @@ StringUtils, ColorUtils, Helpers, ExtensionsFunctions, Observers, Executors and 
 * When creating widgets(custom views). It's much better having them separate in a widget folder. Doing so they are easy to identify and use.
 
 
-* As you can see we only have 
+[6]: https://google.github.io/dagger/android
 
-[1]: https://google.github.io/dagger/android
+Go to Exercises:
+# [First Exercise][1]
+# [Second Exercise (shake animation)][2]
+# [Second Exercise (shake action)][3]
+# [Third Exercise][4]
+# [Four Exercise][5]
+
+[1]: https://github.com/CarlitosDroid/android-exercises-resolution/tree/exercise_1_stepper
+[2]: https://github.com/CarlitosDroid/android-exercises-resolution/tree/exercise_2_shake_animation
+[3]: https://github.com/CarlitosDroid/android-exercises-resolution/tree/exercise_2_shake_action
+[4]: https://github.com/CarlitosDroid/android-exercises-resolution/tree/exercise_3_mvp_project
+[5]: https://github.com/CarlitosDroid/android-exercises-resolution/tree/exercise_3_mvp_project
