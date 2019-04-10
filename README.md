@@ -245,6 +245,12 @@ interface IStepperAdapter {
 }
 ```
 
+# The Step Model Class
+```kotlin
+data class Step(var title: String, var summary: String, var stepState: Int = StepStates.STATE_NORMAL)
+```
+This is class will represent the common parts in every step, such as the title, summary, state and so on.
+
 # THE VERTICAL STEPPER VIEW
 
 ## 7. In the same way as VerticalStepperItemView, our `VerticalStepperView` will inflate its own layout `vertical_stepper_view.xml` which has RecyclerView.
@@ -270,7 +276,8 @@ class VerticalStepperView : FrameLayout {
     private var stepperAdapter: IStepperAdapter? = null
 
     private val itemAdapter = ItemAdapter()
-    private var stepDefault = StepStates.STATE_NORMAL
+
+    private var stepList: MutableList<Step>? = null
 
     constructor (context: Context) : super(context)
 
@@ -278,17 +285,26 @@ class VerticalStepperView : FrameLayout {
 
     init {
         View.inflate(context, R.layout.vertical_stepper_view, this)
-        rvStepperView.adapter = itemAdapter
-        setCurrentState(stepDefault)
+    }
+
+    fun setStepList(stepList: MutableList<Step>) {
+        this.stepList = stepList
+        itemAdapter.notifyDataSetChanged()
     }
 
     fun setStepperAdapter(mStepperAdapter: IStepperAdapter) {
         this.stepperAdapter = mStepperAdapter
-        itemAdapter.notifyDataSetChanged()
+        rvStepperView.adapter = itemAdapter
     }
 
-    fun setCurrentState(@StepStates.StepState stepState: Int) {
-        this.stepDefault = stepState
+    fun setCurrentState(@StepStates.StepState stepState: Int, position: Int) {
+        for (step in stepList!!) {
+            step.stepState = StepStates.STATE_NORMAL
+        }
+        if(position < stepList!!.size -1){
+            stepList!![position+1].stepState = stepState
+            itemAdapter.notifyDataSetChanged()
+        }
     }
 
     private inner class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
@@ -298,20 +314,23 @@ class VerticalStepperView : FrameLayout {
         override fun getItemCount(): Int = stepperAdapter!!.size()
 
         override fun onBindViewHolder(itemViewHolder: ItemViewHolder, position: Int) {
-            itemViewHolder.verticalStepperItemView.setTitle(stepperAdapter!!.getTitle(position).toString())
-            itemViewHolder.verticalStepperItemView.setSummary(stepperAdapter!!.getSummary(position).toString())
-            itemViewHolder.verticalStepperItemView.setColorStep()
-            itemViewHolder.verticalStepperItemView.setState(stepDefault)
-
-            val customView =
-                stepperAdapter!!.onCreateCustomView(position, context, itemViewHolder.verticalStepperItemView)
-            itemViewHolder.verticalStepperItemView.addCustomContentView(customView)
+            itemViewHolder.bind(stepList!![position])
         }
 
         inner class ItemViewHolder(var verticalStepperItemView: VerticalStepperItemView) :
-            RecyclerView.ViewHolder(verticalStepperItemView)
-    }
+            RecyclerView.ViewHolder(verticalStepperItemView) {
+            fun bind(step: Step) {
+                verticalStepperItemView.setTitle(step.title)
+                verticalStepperItemView.setSummary(step.summary)
+                verticalStepperItemView.setColorStep()
+                verticalStepperItemView.setState(step.stepState)
 
+                val customView =
+                    stepperAdapter!!.onCreateCustomView(position, context, verticalStepperItemView)
+                verticalStepperItemView.addCustomContentView(customView)
+            }
+        }
+    }
 }
 ```
 ## 8. The final user(developer) will only have to implement our component on this way
@@ -331,57 +350,42 @@ Our class will looks like this
 
 class MainActivity : AppCompatActivity(), IStepperAdapter {
 
+    private val stepList by lazy {
+        mutableListOf(
+            Step(
+                getString(R.string.select_application),
+                getString(R.string.select_first_step),
+                StepStates.STATE_SELECTED
+            ),
+            Step(getString(R.string.setting_up_analytics), getString(R.string.the_second_step)),
+            Step(getString(R.string.select_ad_format), getString(R.string.last_step))
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         vsvStepper.setStepperAdapter(this)
+        vsvStepper.setStepList(stepList)
     }
 
-    override fun getTitle(index: Int): CharSequence {
-        return when (index) {
-            0 -> {
-                getString(R.string.select_application)
-            }
-            1 -> {
-                getString(R.string.setting_up_analytics)
-            }
-            2 -> {
-                getString(R.string.select_ad_format)
-            }
-            else -> {
-                getString(R.string.default_string)
-            }
-        }
-    }
+    override fun getTitle(index: Int): CharSequence = stepList[index].title
 
-    override fun getSummary(index: Int): CharSequence? {
-        return when (index) {
-            0 -> {
-                getString(R.string.select_first_step)
-            }
-            1 -> {
-                getString(R.string.the_second_step)
-            }
-            2 -> {
-                getString(R.string.last_step)
-            }
-            else -> {
-                getString(R.string.default_summary)
-            }
-        }
-    }
+    override fun getSummary(index: Int): CharSequence? = stepList[index].summary
 
     override fun size(): Int {
-        return 3
+        return stepList.size
     }
 
     override fun onCreateCustomView(index: Int, context: Context, parent: VerticalStepperItemView): View {
-        var inflated = LayoutInflater.from(context).inflate(R.layout.content_view, parent, false)
+        val inflated = LayoutInflater.from(context).inflate(R.layout.content_view, parent, false)
+
         inflated.btnOk.setOnClickListener {
+            vsvStepper.setCurrentState(StepStates.STATE_SELECTED, index)
         }
         return inflated
     }
-}
+}    
 
 ```
 
