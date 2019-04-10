@@ -249,7 +249,8 @@ interface IStepperAdapter {
 ```kotlin
 data class Step(var title: String, var summary: String, var stepState: Int = StepStates.STATE_NORMAL)
 ```
-This is class will represent the common parts in every step, such as the title, summary, state and so on.
+## This is class will represent the common parts in every step, such as the title, summary, state and so on.
+## ´Keep in mind, whole component depends on our Step Model Class´, the model class represents what we are going to show visually
 
 # THE VERTICAL STEPPER VIEW
 
