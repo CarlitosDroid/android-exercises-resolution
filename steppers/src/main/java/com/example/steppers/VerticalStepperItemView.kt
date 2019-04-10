@@ -34,16 +34,19 @@ class VerticalStepperItemView : FrameLayout {
 
     fun setState(@StepStates.StepState stepState: Int){
         when(stepState){
+            StepStates.STATE_SELECTED -> {
+                tvStepNumber.setBackgroundResource(R.drawable.bg_step_enable)
+                flContent.visibility = View.VISIBLE
+            }
+
             StepStates.STATE_NORMAL -> {
                 tvStepNumber.setBackgroundResource(R.drawable.bg_step_disable)
+                flContent.visibility = View.GONE
             }
 
             StepStates.STATE_DONE -> {
                 tvStepNumber.setBackgroundResource(R.drawable.bg_step_enable)
-            }
-
-            StepStates.STATE_SELECTED -> {
-                tvStepNumber.setBackgroundResource(R.drawable.bg_step_enable)
+                flContent.visibility = View.GONE
             }
         }
     }

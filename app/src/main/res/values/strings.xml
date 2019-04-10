@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">android-exercises-resolution</string>
+    <string name="select_application">Select an app</string>
+    <string name="setting_up_analytics">Configure Analytics for this app</string>
+    <string name="select_ad_format">Selection an ad format and name ad unit</string>
+    <string name="default_string">Default String</string>
+    <string name="select_first_step">This is the first step. Click OK button to next step.</string>
+    <string name="the_second_step">This is the second step. Click OK button to next step or Cancel</string>
+    <string name="last_step">This is the last step. You can finish steps now.</string>
+    <string name="default_summary">Default String</string>
 </resources>

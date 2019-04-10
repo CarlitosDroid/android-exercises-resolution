@@ -13,7 +13,8 @@ class VerticalStepperView : FrameLayout {
     private var stepperAdapter: IStepperAdapter? = null
 
     private val itemAdapter = ItemAdapter()
-    private var stepDefault = StepStates.STATE_NORMAL
+
+    private var stepList: MutableList<Step>? = null
 
     constructor (context: Context) : super(context)
 
@@ -21,17 +22,26 @@ class VerticalStepperView : FrameLayout {
 
     init {
         View.inflate(context, R.layout.vertical_stepper_view, this)
-        rvStepperView.adapter = itemAdapter
-        setCurrentState(stepDefault)
+    }
+
+    fun setStepList(stepList: MutableList<Step>) {
+        this.stepList = stepList
+        itemAdapter.notifyDataSetChanged()
     }
 
     fun setStepperAdapter(mStepperAdapter: IStepperAdapter) {
         this.stepperAdapter = mStepperAdapter
-        itemAdapter.notifyDataSetChanged()
+        rvStepperView.adapter = itemAdapter
     }
 
-    fun setCurrentState(@StepStates.StepState stepState: Int) {
-        this.stepDefault = stepState
+    fun setCurrentState(@StepStates.StepState stepState: Int, position: Int) {
+        for (step in stepList!!) {
+            step.stepState = StepStates.STATE_NORMAL
+        }
+        if(position < stepList!!.size -1){
+            stepList!![position+1].stepState = stepState
+            itemAdapter.notifyDataSetChanged()
+        }
     }
 
     private inner class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
@@ -41,18 +51,21 @@ class VerticalStepperView : FrameLayout {
         override fun getItemCount(): Int = stepperAdapter!!.size()
 
         override fun onBindViewHolder(itemViewHolder: ItemViewHolder, position: Int) {
-            itemViewHolder.verticalStepperItemView.setTitle(stepperAdapter!!.getTitle(position).toString())
-            itemViewHolder.verticalStepperItemView.setSummary(stepperAdapter!!.getSummary(position).toString())
-            itemViewHolder.verticalStepperItemView.setColorStep()
-            itemViewHolder.verticalStepperItemView.setState(stepDefault)
-
-            val customView =
-                stepperAdapter!!.onCreateCustomView(position, context, itemViewHolder.verticalStepperItemView)
-            itemViewHolder.verticalStepperItemView.addCustomContentView(customView)
+            itemViewHolder.bind(stepList!![position])
         }
 
         inner class ItemViewHolder(var verticalStepperItemView: VerticalStepperItemView) :
-            RecyclerView.ViewHolder(verticalStepperItemView)
-    }
+            RecyclerView.ViewHolder(verticalStepperItemView) {
+            fun bind(step: Step) {
+                verticalStepperItemView.setTitle(step.title)
+                verticalStepperItemView.setSummary(step.summary)
+                verticalStepperItemView.setColorStep()
+                verticalStepperItemView.setState(step.stepState)
 
+                val customView =
+                    stepperAdapter!!.onCreateCustomView(position, context, verticalStepperItemView)
+                verticalStepperItemView.addCustomContentView(customView)
+            }
+        }
+    }
 }
