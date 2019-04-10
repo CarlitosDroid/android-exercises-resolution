@@ -16,13 +16,12 @@ As you can see in the picture, the idea is aimed to have a modularize applicatio
 
 4. In order to take advantage of `Dependency Injection` design patern which allows us loose coupling (architecture principle). We need to add a Dagger folder in every module in order to share Dagger Components and use dependencies in every module. Don't forget [`a class shouldn’t know anything about how it is injected`][1]
 
+# 5. Now the MVP(architectural pattern), The way that I define it in a module is as follow below:
+<p align="center">
+    <img src="screenshots/mvp.png" alt="icon" width="40%"/>
+</p>
 
-
-5. Now the MVP(architectural pattern), The way that I define it in a module is as follow below:
-* A `dagger` or `di` folder. (di stands for dependency injection)
-* A `data` folder
-* A `domain` folder
-* A `ui` folder
+* A `di` folder. (di stands for dependency injection)
 
 # 6. The `data` package:
 <p align="center">
@@ -58,7 +57,7 @@ As you can see in the picture, the idea is aimed to have a modularize applicatio
 ### The `UserRepository` class
 * Having repositories is a good practice, the main difference between Repositories and DataSource is that Repositories uses DataSources and can apply additional task like saving data in caché.
 
-# 11. The `domain` folder
+# 10. The `domain` folder
 * This folder contains UseCases classes which uses repository classes. The idea of having them is to make works with repositories or for example convert responses of data to another model like mappers.
 
 # 11. The `ui` folder
@@ -71,7 +70,7 @@ As you can see in the picture, the idea is aimed to have a modularize applicatio
 # 13. The `broadcast` folder
 * Another entrypoints to android application is broadcastReceiver that's why we have it as a separate folder.
 
-# 10. The `di` folder
+# 14. The `di` folder
 <p align="center">
     <img src="screenshots/di.png" alt="icon" width="40%"/>
 </p>
@@ -83,11 +82,11 @@ As you can see in the picture, the idea is aimed to have a modularize applicatio
 ### The `modules` folder
 * Contains our dependencies
 
-# 14. The `utils` folder
+# 15. The `utils` folder
 * Always it's necessary having utils for several reasons. Our utils folder will be part of our `core` module. This folder can contains everything that can be used across different classes and modules. For example:
 StringUtils, ColorUtils, Helpers, ExtensionsFunctions, Observers, Executors and so on.
 
-# 15. The `widget` folder
+# 16. The `widget` folder
 * When creating widgets(custom views). It's much better having them separate in a widget folder. Doing so they are easy to identify and use.
 
 
